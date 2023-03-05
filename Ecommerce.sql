@@ -1,10 +1,9 @@
--- Active: 1677916902963@@127.0.0.1@3306@ecommerce
 
-CREATE DATABASE Ecommerce;
+-- CREATE DATABASE Ecommerce;
 
-USE Ecommerce ;
-DROP TABLE addresses;
-SELECT * FROM customers;
+-- USE Ecommerce ;
+-- DROP TABLE addresses;
+-- SELECT * FROM customers;
 CREATE TABLE
     users(
         user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -33,7 +32,7 @@ CREATE TABLE
  3:residentail and delivery
  */
 
-CREATE TRIGGER INSERT_USER AFTER INSERT ON CUSTOMERS 
+CREATE TRIGGER INSERT_USER AFTER INSERT ON customers 
 FOR EACH ROW BEGIN 
 	INSERT INTO
 	    users(
@@ -61,7 +60,7 @@ FOR EACH ROW BEGIN
 	        country VARCHAR(25) NOT NULL,
 	        pincode VARCHAR(25) NOT NULL
 	    );
-drop table addresses;
+-- drop table addresses;
 	CREATE TABLE
 	    products (
 	        product_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -121,15 +120,17 @@ SELECT
 from orders o1
     LEFT JOIN orderdetails o2 ON o1.order_id = o2.order_id;
 
- select month(order_date),sum(unit_price*quantity) 
-from orders,products,orderdetails 
-where products.product_id=orderdetails.product_id 
-and order_date > now() - INTERVAL 12 month 
-group by month(order_date);
+--  select month(order_date),sum(unit_price*quantity) 
+-- from orders,products,orderdetails 
+-- where products.product_id=orderdetails.product_id 
+-- and order_date > now() - INTERVAL 12 month 
+-- group by month(order_date);
 
 
-drop table products;
-drop table orderdetails;
+-- drop table products;
+-- drop table orderdetails;
+
+INSERT INTO customers(first_name,last_name,email,contact_number,password) VALUES ('sahil','mankar','sahil@123','9960916323','sahil@123');
 INSERT INTO products(title,description,stock_available,unit_price,image)VALUES('ParleG','tasty biscuits',20000,10,'./images/Parleg.jpg');
 INSERT INTO products(title,description,stock_available,unit_price,image)VALUES('GoodDay','tasty cookies',50000,15,'./images/goodday.jpg');
 INSERT INTO products(title,description,stock_available,unit_price,image)VALUES('MariGold','tasty biscuits',40000,16,'./images/marigold.jpg');
@@ -140,5 +141,5 @@ SELECT * FROM customers;
 INSERT INTO addresses(cust_id,address_mode,house_number,landmark,city,state,country,pincode)VALUES(1,'permanent','houseNo.12','Pune-Nashik Highway','Manchar','Maharashtra','India','123321');
 INSERT INTO addresses(cust_id,address_mode,house_number,landmark,city,state,country,pincode)VALUES(1,'billing','houseNo.12','Pune-Nashik Highway','Manchar','Maharashtra','India','123321');
 INSERT INTO addresses(cust_id,address_mode,house_number,landmark,city,state,country,pincode)VALUES(1,'permanent','houseNo.32','Peth-Kurwandi Road','Manchar','Maharashtra','India','123321');
-INSERT INTO addresses(cust_id,address_mode,house_number,landmark,city,state,country,pincode)VALUES(2,'permanent','houseNo.234','Pune-Nashik Highway','Rajgurunagar','Maharashtra','India','121321');
+INSERT INTO addresses(cust_id,address_mode,house_number,landmark,city,state,country,pincode)VALUES(1,'permanent','houseNo.234','Pune-Nashik Highway','Rajgurunagar','Maharashtra','India','121321');
 

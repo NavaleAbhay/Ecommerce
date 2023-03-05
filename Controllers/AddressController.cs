@@ -23,8 +23,8 @@ public class AddressController : Controller
     [HttpGet]
     public IActionResult GetAddresses()
     {
-        var user =HttpContext.Session.GetObjectFromJson<User>("User");
-       var addresses= _addresssrv.GetAddresses(user.UserId);
+        var customer =HttpContext.Session.GetObjectFromJson<Customer>("Customer");
+       var addresses= _addresssrv.GetAddresses(customer.CustomerId);
        return View(addresses);
     }
 
