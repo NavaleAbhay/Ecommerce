@@ -12,4 +12,9 @@ public class Address
     public string? State{get;set;}
     public string? Country{get;set;}
     public string? PinCode{get;set;}
+    public string FullAddress{
+        get{
+            return $"{HouseNumber},{Landmark},{City},{State},{Country},{PinCode}";
+        }
+    }
 }
