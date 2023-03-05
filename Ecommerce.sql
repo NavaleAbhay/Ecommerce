@@ -1,7 +1,7 @@
 
-/*CREATE DATABASE Ecommerce;
+CREATE DATABASE Ecommerce;
 
- USE Ecommerce ;*/
+ USE Ecommerce ;
 
 CREATE TABLE
     users(

@@ -51,4 +51,29 @@ public class AddressRepository : IAddressRepository
         }
         return addresses;
     }
+
+     public bool InsertAddress(Address address)
+    {
+        bool status = false;
+        MySqlConnection con = new MySqlConnection();
+        con.ConnectionString = conString;
+        try
+        {
+            string query =$"INSERT INTO addresses(cust_id,address_mode,house_number,landmark,city,state,country,pincode)VALUES('{address.CustomerId}','permanent','{address.HouseNumber}','{address.Landmark}','{address.City}','{address.State}','{address.Country}','{address.PinCode}')";
+            con.Open();
+            MySqlCommand command = new MySqlCommand(query, con);
+            command.ExecuteNonQuery();
+            status = true;
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        finally
+        {
+            con.Close();
+        }
+        return status;
+    }
+
 }

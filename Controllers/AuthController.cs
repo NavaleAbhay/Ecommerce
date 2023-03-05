@@ -25,7 +25,7 @@ public class AuthController : Controller
     public IActionResult Register(Customer customer)
     {
         _customersrv.InsertCustomer(customer);
-        return RedirectToAction("Login", "Auth");
+        return RedirectToAction("LogIn", "Auth");
     }
 
 
@@ -34,7 +34,7 @@ public class AuthController : Controller
         return View();
     }
     [HttpPost]
-    public IActionResult Login(User user)
+    public IActionResult LogIn(User user)
     {
         bool status = _usersrv.ValidateUser(user);
         if (status)

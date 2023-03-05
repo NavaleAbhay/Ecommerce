@@ -14,11 +14,16 @@ public class AddressController : Controller
         _addresssrv = addresssrv;
     }
 
-
-    [HttpGet]
-    public IActionResult Search(){
+     [HttpGet]
+     public IActionResult PermanentAddress(){
         return View();
-    }
+     }
+
+     [HttpPost]
+     public IActionResult PermanentAddress(Address address){
+        _addresssrv.InsertAddress(address);
+        return RedirectToAction("LogIn","Auth");
+     }
 
     [HttpGet]
     public IActionResult GetAddresses()

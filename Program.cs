@@ -14,6 +14,9 @@ builder.Services.AddTransient<IProductRepository,ProductRepository>();
 builder.Services.AddTransient<IProductService,ProductService>();
 builder.Services.AddTransient<IAddressRepository,AddressRepository>();
 builder.Services.AddTransient<IAddressService,AddressService>();
+
+
+
 builder.Services.AddSession(options =>{
     options.IdleTimeout=TimeSpan.FromMinutes(10);
     options.Cookie.HttpOnly=true;

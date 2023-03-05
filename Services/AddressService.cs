@@ -10,4 +10,6 @@ public class AddressService:IAddressService{
     }
 
     public List<Address> GetAddresses(int id) => _repo.GetAddresses(id);
+
+    public bool InsertAddress(Address address)=>_repo.InsertAddress(address);
 }
