@@ -8,7 +8,9 @@
 @using(Html.BeginForm()){
 
 <table>
+  
   <input type="hidden" name="product.ProductId" value="@Model.ProductId" />
+  <input type="hidden" name="product.ImageUrl" value="@Model.ImageUrl" />
   <tr>
     <th><label for="@Model.Title">Name</label></th>
     <td><input type="text" name="product.Title" value="@Model.Title" /></td>

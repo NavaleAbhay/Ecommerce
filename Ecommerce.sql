@@ -1,9 +1,8 @@
 
--- CREATE DATABASE Ecommerce;
+/*CREATE DATABASE Ecommerce;
 
--- USE Ecommerce ;
--- DROP TABLE addresses;
--- SELECT * FROM customers;
+ USE Ecommerce ;*/
+
 CREATE TABLE
     users(
         user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -60,8 +59,6 @@ FOR EACH ROW BEGIN
 	        country VARCHAR(25) NOT NULL,
 	        pincode VARCHAR(25) NOT NULL
 	    );
--- drop table addresses;
-	CREATE TABLE
 	    products (
 	        product_id INT PRIMARY KEY AUTO_INCREMENT,
 	        title VARCHAR(20) NOT NULL,
@@ -119,16 +116,15 @@ SELECT
     order_date
 from orders o1
     LEFT JOIN orderdetails o2 ON o1.order_id = o2.order_id;
+/*
+ select month(order_date),sum(unit_price*quantity) 
+from orders,products,orderdetails 
+where products.product_id=orderdetails.product_id 
+and order_date > now() - INTERVAL 12 month 
+group by month(order_date);*/
 
---  select month(order_date),sum(unit_price*quantity) 
--- from orders,products,orderdetails 
--- where products.product_id=orderdetails.product_id 
--- and order_date > now() - INTERVAL 12 month 
--- group by month(order_date);
 
 
--- drop table products;
--- drop table orderdetails;
 
 INSERT INTO customers(first_name,last_name,email,contact_number,password) VALUES ('sahil','mankar','sahil@123','9960916323','sahil@123');
 INSERT INTO products(title,description,stock_available,unit_price,image)VALUES('ParleG','tasty biscuits',20000,10,'./images/Parleg.jpg');
