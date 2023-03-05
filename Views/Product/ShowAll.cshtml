@@ -1,0 +1,37 @@
+
+@using ECommerceApp.Models;
+@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Products Page";
+}
+
+<link rel="stylesheet" href="~/css/table.css" type="text/css" />
+
+
+<h1>Products</h1>
+
+<table>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            
+            @* <th> Add To Cart</th> *@
+        </tr>
+
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td> <img src="~/@product.ImageUrl" height="50px" width="50px"/> </td>
+                <td>@product.Title</td>
+                <td>@product.Description</td>
+                <td>@product.UnitPrice</td>
+               
+                <td><a href="@Url.Action("BuyQuantity", "Cart" , new {id=@product.ProductId})"><button> Add to Cart </button></a></td>
+            </tr>
+        }
+</table>
+
+
