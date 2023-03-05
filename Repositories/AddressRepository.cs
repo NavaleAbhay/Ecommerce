@@ -59,7 +59,7 @@ public class AddressRepository : IAddressRepository
         con.ConnectionString = conString;
         try
         {
-            string query =$"INSERT INTO addresses(cust_id,address_mode,house_number,landmark,city,state,country,pincode)VALUES('{address.CustomerId}','permanent','{address.HouseNumber}','{address.Landmark}','{address.City}','{address.State}','{address.Country}','{address.PinCode}')";
+            string query =$"INSERT INTO addresses(cust_id,address_mode,house_number,landmark,city,state,country,pincode)VALUES('{address.CustomerId}','{address.AddressMode}','{address.HouseNumber}','{address.Landmark}','{address.City}','{address.State}','{address.Country}','{address.PinCode}')";
             con.Open();
             MySqlCommand command = new MySqlCommand(query, con);
             command.ExecuteNonQuery();

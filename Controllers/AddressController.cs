@@ -21,8 +21,10 @@ public class AddressController : Controller
 
      [HttpPost]
      public IActionResult PermanentAddress(Address address){
+         int customerid =HttpContext.Session.GetObjectFromJson<Customer>("Customer").CustomerId;
+         address.CustomerId=customerid;
         _addresssrv.InsertAddress(address);
-        return RedirectToAction("LogIn","Auth");
+        return RedirectToAction("GetAddresses");
      }
 
     [HttpGet]
