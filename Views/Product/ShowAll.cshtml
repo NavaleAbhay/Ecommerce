@@ -5,32 +5,27 @@
 @{
     ViewData["Title"] = "Products Page";
 }
-
-<link rel="stylesheet" href="~/css/table.css" type="text/css" />
-
 <h1>Products</h1>
-
-<table>
+<hr/>
+<table class="table">
+    <thead>
         <tr>
             <th></th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            
-            @* <th> Add To Cart</th> *@
+            <th>@Html.DisplayNameFor(model => model.Title)</th>
+            <th>@Html.DisplayNameFor(model => model.Description)</th>
+            <th>@Html.DisplayNameFor(model => model.UnitPrice)</th>
         </tr>
-
+    </thead>
+    <tbody>
         @foreach (var product in Model)
         {
             <tr>
                 <td> <img src="~/@product.ImageUrl" height="50px" width="50px"/> </td>
-                <td>@product.Title</td>
-                <td>@product.Description</td>
-                <td>@product.UnitPrice</td>
-               
+                <td>@Html.DisplayFor(modelItem => product.Title)</td>
+                <td>@Html.DisplayFor(modelItem => product.Description)</td>
+                <td>@Html.DisplayFor(modelItem => product.UnitPrice)</td>
                 <td><a href="@Url.Action("BuyQuantity", "Cart" , new {id=@product.ProductId})"><button> Add to Cart </button></a></td>
             </tr>
         }
+    </tbody>
 </table>
-
-
