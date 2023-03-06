@@ -88,8 +88,8 @@ FOR EACH ROW BEGIN
 	    sum(quantity) as totalquantity
 	from orderdetails
 	where product_id = 1;
-	CREATE PROCEDURE TOTALREVENUE(IN PRODUCTID INT, OUT 
-	TOTALREVENUE DOUBLE) BEGIN 
+	CREATE PROCEDURE getrevenue(IN productid INT, OUT 
+	totalrevenue DOUBLE) BEGIN 
 		DECLARE totalquantity INT;
 		DECLARE unitprice DOUBLE;
 		SELECT
@@ -139,3 +139,29 @@ INSERT INTO addresses(cust_id,address_mode,house_number,landmark,city,state,coun
 INSERT INTO addresses(cust_id,address_mode,house_number,landmark,city,state,country,pincode)VALUES(1,'permanent','houseNo.32','Peth-Kurwandi Road','Manchar','Maharashtra','India','123321');
 INSERT INTO addresses(cust_id,address_mode,house_number,landmark,city,state,country,pincode)VALUES(1,'permanent','houseNo.234','Pune-Nashik Highway','Rajgurunagar','Maharashtra','India','121321');
 
+INSERT INTO orders(order_date,cust_id,status)
+            VALUES        ('2020-08-25  06:35:25',1,'Approved'); 
+
+INSERT INTO orders(order_date,cust_id,status)
+            VALUES        ('2021-06-04  08:35:25',1,'Approved'); 
+
+INSERT INTO orders(order_date,cust_id,status)
+            VALUES        ('2010-01-16  09:35:25',2,'Approved'); 
+
+INSERT INTO orders(order_date,cust_id,status)
+            VALUES        ('2021-05-15  11:35:25',2,'Approved');
+
+
+				
+INSERT INTO orderdetails(order_id,product_id,quantity) 
+                  VALUES(1,1,70);
+INSERT INTO orderdetails(order_id,product_id,quantity) 
+                  VALUES(1,2,700);
+INSERT INTO orderdetails(order_id,product_id,quantity) 
+                  VALUES(2,3,78);
+INSERT INTO orderdetails(order_id,product_id,quantity) 
+                  VALUES(3,4,78);
+ INSERT INTO orderdetails(order_id,product_id,quantity) 
+ VALUES(3,1,78);
+
+	
