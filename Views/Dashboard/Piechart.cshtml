@@ -1,13 +1,12 @@
-
 <title>@ViewData["Title"] - Pie Chart</title>  
 <script type="text/javascript" 
         src="https://www.gstatic.com/charts/loader.js"></script>  
-  
+
 
 
 <h2>Sales Dashboard</h2>
 <hr/>
-  <a href="/Dashboard/PieChart">Pie Chart</a>   
+ <a href="/Dashboard/Piechart">Pie Chart</a>  
 <hr/>
 
 <div id="chart_div"></div>  
@@ -18,7 +17,7 @@
         packages: ['corechart', 'bar']  
     });  
     google.charts.setOnLoadCallback(LoadData);  
-    
+  
     function LoadData() {  
         $.ajax({  
   
@@ -36,27 +35,28 @@
             }  
         });  
         return false;  
-    }
-    function revenueChart(data) {  
+    }  
+  
+ function revenueChart(data) {  
         var dataArray = [  
-            ['Product','totalRevenue']  
+            ['Product', 'totalRevenue']  
         ];  
         $.each(data, function(i, product) {  
-            dataArray.push([product.title, product.totalRevenue]);  
+            dataArray.push([product.title,product.totalRevenue]);  
         });  
         var data = google.visualization.arrayToDataTable(dataArray);  
         var options = {  
             title: 'Details of Products ',  
             chartArea: {  
-                width: '50%'  
+                width: '80%'  
             },  
-            colors: ['#b0120a','#7b1fa2', '#ffab91', '#d95f02'],  
+            colors: ['#b0120a', '#7b1fa2', '#ffab91', '#d95f02','#d95f02'] ,
             hAxis: {  
-                title: 'Product',  
+                title: 'products',  
                 minValue: 0  
             },  
             vAxis: {  
-                title: 'Total sale'  
+                title: 'Total Sale'  
             }  
         };  
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));  
