@@ -85,28 +85,36 @@ public class OrderDetailsRepository : IOrderDetailsRepository
         connection.ConnectionString = conString;
         try
         {
-            string query = $"SELECT products.product_id,products.title , products.unit_price, orderdetails.quantity,customers.cust_id,orders.order_id,orders.order_date FROM products,customers, orders INNER JOIN orderdetails on orderdetails.order_id=orders.order_id WHERE  products.product_id=orderdetails.product_id AND customers.cust_id=orders.cust_id AND customers.cust_id={customerId} order by orders.order_id;";
-            connection.Open();
+            string query = "SELECT orders.order_id,products.title , products.unit_price," +
+                          " orderdetails.quantity,orders.order_date,orders.delivery_date FROM " +
+                          " products,customers, orders INNER JOIN orderdetails on orderdetails.order_id=orders.order_id " +
+                          " WHERE  products.product_id=orderdetails.product_id AND customers.cust_id=orders.cust_id " +
+                          " AND customers.cust_id='" + customerId + "' order by orders.order_id";
             MySqlCommand command = new MySqlCommand(query, connection);
+            connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
+                int orderId = int.Parse(reader["order_id"].ToString());
                 string? title = reader["title"].ToString();
                 double unitprice = double.Parse(reader["unit_price"].ToString());
                 int quantity = int.Parse(reader["quantity"].ToString());
-                DateTime date = DateTime.Parse(reader["order_date"].ToString());
+                DateTime orderDate = DateTime.Parse(reader["order_date"].ToString());
+                DateTime deliveryDate = DateTime.Parse(reader["delivery_date"].ToString());
 
                 OrderHistory orderhistory = new OrderHistory
                 {
+                    OrderId = orderId,
                     Title = title,
                     UnitPrice = unitprice,
                     Quantity = quantity,
-                    OrderDate = date
+                    OrderDate = orderDate,
+                    DeliveryDate = deliveryDate
                 };
                 orderHistories.Add(orderhistory);
             }
         }
-              catch (Exception e)
+        catch (Exception e)
         {
             throw e;
         }

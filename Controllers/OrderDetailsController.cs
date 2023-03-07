@@ -20,6 +20,7 @@ public class OrderDetailsController : Controller
    {
     var customerId=HttpContext.Session.GetObjectFromJson<Customer>("Customer").CustomerId;
     var history=_srv.OrderHistory(customerId);
-    return View(history);
+    var groupedData=history.GroupBy(o => o.OrderId);
+    return View(groupedData);
    } 
 }

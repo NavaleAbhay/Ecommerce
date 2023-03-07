@@ -429,7 +429,7 @@ GROUP BY product_id;
 SELECT products.product_id,products.title , products.unit_price, orderdetails.quantity,customers.cust_id,orders.order_id,orders.order_date 
 FROM products,customers, orders INNER JOIN orderdetails on orderdetails.order_id=orders.order_id 
 WHERE  products.product_id=orderdetails.product_id AND customers.cust_id=orders.cust_id 
-AND customers.cust_id=1 order by orders.order_id;
+AND customers.cust_id=1 order by orders.order_id ;
 
 SELECT * FROM orders;
 
