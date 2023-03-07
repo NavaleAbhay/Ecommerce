@@ -47,8 +47,8 @@ public class PaymentDetailsController : Controller
                 _orderdetailssrv.InsertOrderdetails(orderId, product.ProductId, product.BuyQuantity);
                 ViewData["products"] = _orderdetailssrv.GetOrderdProducts(orderId);
                 ViewBag.address = _addresssrv.GetAddressById(addresId);
+                HttpContext.Session.Remove("Cart");
             }
-
         }
 
         return View(details);

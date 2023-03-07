@@ -25,7 +25,7 @@ public class CartController : Controller
             return RedirectToAction("Empty", "Cart");
         return View(cart);
     }
-    public IActionResult Empty()
+    public  IActionResult Empty()
     {
         return View();
     }
@@ -86,31 +86,6 @@ public class CartController : Controller
 
         return RedirectToAction("Index");
     }
-
-
-
-    // [HttpGet]
-    // public IActionResult BuyNow()
-    // {
-        
-    //     var cart = HttpContext.Session.GetObjectFromJson<Cart>("Cart")
-    //                ?? new Cart();
-    //     return View(cart);
-        
-    // }
-
-    // [HttpPost]
-    // public IActionResult OrderPlaced(PaymentDetails details){
-    //       var cart = HttpContext.Session.GetObjectFromJson<Cart>("Cart");
-    //       foreach(var product in cart.Products){
-    //       var foundProduct=  _service.GetProductById(product.Id);
-    //       foundProduct.Count=product.Count;
-    //      _service.UpdateProduct(foundProduct);
-    //       }
-    //     return View(details);
-    // }
-
-
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

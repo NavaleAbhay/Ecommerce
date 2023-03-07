@@ -28,8 +28,8 @@
                 <td>@product.Description</td>
                 <td>@product.UnitPrice</td>
                 <td>@product.BuyQuantity</td> 
-                 <td>@TotalPrice</td> 
-                  <td><a href="@Url.Action("RemoveFromCart", "Cart", new { id = product.ProductId })">Remove</a></td>
+                <td>@TotalPrice</td> 
+                <td><a href="@Url.Action("RemoveFromCart", "Cart", new { id = product.ProductId })">Remove</a></td>
             </tr>
         }
 </table>
@@ -38,4 +38,3 @@
 
 <button><a asp-controller="Product" asp-action="ShowAll">Continue Shopping</a></button>
  <button> <a href="@Url.Action("GetAddresses", "Address")">BuyNow</a></button>
-@* <button><a asp-controller="Address" asp-action="GetAddresses">BuyNow </a></button>  *@

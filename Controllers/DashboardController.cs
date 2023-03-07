@@ -1,10 +1,10 @@
 
 using System.Data.Common;
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using ECommerceApp.Helpers;
 using ECommerceApp.Models;
 using ECommerceApp.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace ECommerceApp.Controllers;
@@ -13,10 +13,10 @@ public class DashboardController : Controller
 {
     private readonly IDashboardService _dashboardsrv;
 
-        public DashboardController(IDashboardService dashboardsrv)
+    public DashboardController(IDashboardService dashboardsrv)
     {
         _dashboardsrv = dashboardsrv;
-           }
+    }
     public JsonResult GetDetails()
     {
         var result = _dashboardsrv.GetProductsData();
@@ -33,15 +33,15 @@ public class DashboardController : Controller
     {
         return View();
     }
-   
+
     [HttpGet]
     public IActionResult PieChart()
-     {
-         return View();
-     }
-    public IActionResult LineChart()
-   {     
-         return View();
+    {
+        return View();
     }
- }
+    public IActionResult LineChart()
+    {
+        return View();
+    }
+}
 
