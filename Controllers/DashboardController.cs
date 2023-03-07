@@ -7,7 +7,7 @@ using ECommerceApp.Models;
 using ECommerceApp.Services.Interfaces;
 
 
-namespace SessionManagement.Controllers;
+namespace ECommerceApp.Controllers;
 
 public class DashboardController : Controller
 {
