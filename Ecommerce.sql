@@ -1,4 +1,4 @@
---  USE Ecommerce ;
+USE Ecommerce ;
 
 CREATE TABLE
     users(
@@ -19,6 +19,7 @@ CREATE TABLE
     );
 
 SELECT * FROM users;
+SELECT * FROM users;
 
 /*
  possible vales  for addressmode:
@@ -28,6 +29,7 @@ SELECT * FROM users;
  */
 
 CREATE TRIGGER INSERT_USER AFTER INSERT ON CUSTOMERS 
+CREATE TRIGGER INSERT_USER AFTER INSERT ON CUSTOMERS 
 FOR EACH ROW BEGIN 
 	INSERT INTO
 	    users(
@@ -36,10 +38,56 @@ FOR EACH ROW BEGIN
 	        password
 	    )
 	VALUES (
+	VALUES (
 	        NEW.email,
 	        NEW.contact_number,
 	        NEW.password
 	    );
+END; 
+
+CREATE TABLE
+    addresses(
+        address_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        cust_id INT NOT NULL,
+        CONSTRAINT fk_customer_id_2 FOREIGN KEY(cust_id) REFERENCES customers(cust_id) ON UPDATE CASCADE ON DELETE CASCADE,
+        address_mode ENUM('permanent', 'billing') NOT NULL,
+        house_number VARCHAR(20),
+        landmark VARCHAR(25) NOT NULL,
+        city VARCHAR(25) NOT NULL,
+        state VARCHAR(25) NOT NULL,
+        country VARCHAR(25) NOT NULL,
+        pincode VARCHAR(25) NOT NULL
+    );
+
+CREATE TABLE
+    products (
+        product_id INT PRIMARY KEY AUTO_INCREMENT,
+        title VARCHAR(20) NOT NULL,
+        description VARCHAR(50),
+        stock_available INT NOT NULL,
+        unit_price DOUBLE NOT NULL,
+        image VARCHAR(40)
+    );
+
+CREATE TABLE
+    orders(
+        order_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+        delivery_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+        cust_id INT NOT NULL,
+        CONSTRAINT fk_customer_id FOREIGN KEY (cust_id) REFERENCES customers(cust_id) ON UPDATE CASCADE ON DELETE CASCADE,
+        status ENUM('processing', 'deliverd') NOT NULL
+    );
+
+CREATE TABLE
+    orderdetails(
+        orderdetails_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        order_id INT NOT NULL,
+        CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES orders(order_id) ON UPDATE CASCADE ON DELETE CASCADE,
+        product_id INT NOT NULL,
+        CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES products(product_id) ON UPDATE CASCADE ON DELETE CASCADE,
+        quantity INT NOT NULL
+    );
 END; 
 
 CREATE TABLE
@@ -105,9 +153,52 @@ DOUBLE) BEGIN
 	WHERE product_id = productid;
 	SET totalrevenue = totalquantity * unitprice;
 	SELECT totalrevenue;
+-- SELECT
+
+--     sum(quantity) as totalquantity
+
+-- from orderdetails
+
+-- where product_id = 1;
+
+CREATE PROCEDURE GETREVENUE(IN PRODUCTID INT, OUT TOTALREVENUE 
+DOUBLE) BEGIN 
+	DECLARE totalquantity INT;
+	DECLARE unitprice DOUBLE;
+	SELECT
+	    sum(quantity) INTO totalquantity
+	from orderdetails
+	where product_id = productid;
+	SELECT
+	    unit_price INTO unitprice
+	FROM products
+	WHERE product_id = productid;
+	SET totalrevenue = totalquantity * unitprice;
+	SELECT totalrevenue;
 END; 
 
 CALL getrevenue(2,@totalrevenue);
+
+
+
+
+SELECT
+    orderdetails.product_id,products.title,
+    SUM(orderdetails.quantity) * products.unit_price
+FROM orderdetails, products
+WHERE
+    orderdetails.product_id = products.product_id
+GROUP BY product_id;
+
+
+
+
+
+
+
+
+
+
 
 SELECT @totalrevenue;
 
@@ -127,106 +218,55 @@ from orders o1
  and order_date > now() - INTERVAL 12 month 
  group by month(order_date);*/
 
-INSERT INTO
-    customers(
-        first_name,
-        last_name,
-        email,
-        contact_number,
-        password
-    )
-VALUES (
-        'sahil',
-        'mankar',
-        'sahil@123',
-        '9960916323',
-        'sahil@123'
-    );
+
+SELECT * FROM products;
+
 
 INSERT INTO
-    customers(
-        first_name,
-        last_name,
-        email,
-        contact_number,
-        password
-    )
-VALUES (
-        'abhay',
-        'navle',
-        'abhay@123',
-        '9075966080',
-        'password'
-    );
-
-INSERT INTO
-    products(
-        title,
-        description,
-        stock_available,
-        unit_price,
-        image
+    addresses(
+        cust_id,
+        address_mode,
+        house_number,
+        landmark,
+        city,
+        state,
+        country,
+        pincode
     )
 VALUES
 (
-        'ParleG',
-        'tasty biscuits',
-        20000,
-        10,
-        './images/Parleg.jpg'
+        1,
+        'billing',
+        'houseNo.12',
+        'Pune-Nashik Highway',
+        'Manchar',
+        'Maharashtra',
+        'India',
+        '123321'
     );
 
 INSERT INTO
-    products(
-        title,
-        description,
-        stock_available,
-        unit_price,
-        image
+    addresses(
+        cust_id,
+        address_mode,
+        house_number,
+        landmark,
+        city,
+        state,
+        country,
+        pincode
     )
 VALUES
 (
-        'GoodDay',
-        'tasty cookies',
-        50000,
-        15,
-        './images/goodday.jpg'
+        1,
+        'permanent',
+        'houseNo.32',
+        'Peth-Kurwandi Road',
+        'Manchar',
+        'Maharashtra',
+        'India',
+        '123321'
     );
-
-INSERT INTO
-    products(
-        title,
-        description,
-        stock_available,
-        unit_price,
-        image
-    )
-VALUES
-(
-        'MariGold',
-        'tasty biscuits',
-        40000,
-        16,
-        './images/marigold.jpg'
-    );
-
-INSERT INTO
-    products(
-        title,
-        description,
-        stock_available,
-        unit_price,
-        image
-    )
-VALUES
-(
-        '20-20',
-        'tasty biscuits',
-        70000,
-        10,
-        './images/2020.jpg'
-    );
-
 INSERT INTO
     products(
         title,
@@ -244,6 +284,28 @@ VALUES
         './images/crackjack.jpg'
     );
 
+INSERT INTO
+    addresses(
+        cust_id,
+        address_mode,
+        house_number,
+        landmark,
+        city,
+        state,
+        country,
+        pincode
+    )
+VALUES
+(
+        1,
+        'permanent',
+        'houseNo.234',
+        'Pune-Nashik Highway',
+        'Rajgurunagar',
+        'Maharashtra',
+        'India',
+        '121321'
+    );
 SELECT * FROM customers;
 
 INSERT INTO
@@ -355,28 +417,32 @@ INSERT INTO
 VALUES ('2021-05-15  11:35:25', 2);
 
 INSERT INTO
-    orderdetails(order_id, product_id, quantity)
-VALUES
-(1, 1, 70);
+    orders(order_date, cust_id)
+VALUES ('2020-08-25  06:35:25', 1);
 
 INSERT INTO
-    orderdetails(order_id, product_id, quantity)
-VALUES
-(1, 2, 700);
+    orders(order_date, cust_id)
+VALUES ('2021-06-04  08:35:25', 1);
 
+INSERT INTO
+    orders(order_date, cust_id)
+VALUES ('2010-01-16  09:35:25', 2);
 INSERT INTO
     orderdetails(order_id, product_id, quantity)
 VALUES
 (2, 3, 78);
 
 INSERT INTO
-    orderdetails(order_id, product_id, quantity)
-VALUES
-(3, 4, 78);
+    orders(order_date, cust_id)
+VALUES ('2021-05-15  11:35:25', 2);
 
 INSERT INTO
     orderdetails(order_id, product_id, quantity)
 VALUES(3, 1, 78);
+INSERT INTO
+    orderdetails(order_id, product_id, quantity)
+VALUES
+(1, 1, 70);
 
 SELECT
 	orderdetails.product_id,
@@ -396,6 +462,15 @@ INNER JOIN orderdetails ON
     WHERE orderdetails.order_id=6 ;  
 
 SELECT * FROM orders WHERE cust_id=1;
+INSERT INTO
+    orderdetails(order_id, product_id, quantity)
+VALUES
+(1, 2, 700);
+
+INSERT INTO
+    orderdetails(order_id, product_id, quantity)
+VALUES
+(2, 3, 78);
 
 --  SELECT DISTINCT orderdetails.order_id from orderdetails,orders WHERE orderdetails.order_id=orders.order_id AND  orders.cust_id=1   ;
 
@@ -410,3 +485,11 @@ where (
         where
             orderdetails.order_id = orders.order_id
     );
+INSERT INTO
+    orderdetails(order_id, product_id, quantity)
+VALUES
+(3, 4, 78);
+
+INSERT INTO
+    orderdetails(order_id, product_id, quantity)
+VALUES(3, 1, 78);
