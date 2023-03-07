@@ -329,7 +329,7 @@ INSERT INTO
 VALUES
 (
         2,
-        'permanent',
+        'billing',
         'houseNo.234',
         'Pune-Nashik Highway',
         'Rajgurunagar',
@@ -354,6 +354,10 @@ INSERT INTO
     orders(order_date, cust_id)
 VALUES ('2021-05-15  11:35:25', 2);
 
+
+INSERT INTO orders(cust_id) VALUES(1);
+INSERT INTO orders(cust_id) VALUES(1);
+INSERT INTO orders(cust_id) VALUES(1);
 INSERT INTO
     orderdetails(order_id, product_id, quantity)
 VALUES
@@ -378,6 +382,11 @@ INSERT INTO
     orderdetails(order_id, product_id, quantity)
 VALUES(3, 1, 78);
 
+INSERT INTO orderdetails(order_id,product_id,quantity) VALUES (5,2,2000);
+INSERT INTO orderdetails(order_id,product_id,quantity) VALUES (6,3,3000);
+INSERT INTO orderdetails(order_id,product_id,quantity) VALUES (7,5,5000);
+
+
 SELECT
 	orderdetails.product_id,
     products.title,
@@ -392,20 +401,7 @@ INNER JOIN orderdetails ON
     products.product_id =  orderdetails.product_id 
     WHERE orderdetails.order_id=1;
 
-    SELECT
-    products.title,
-	products.description,
-	products.unit_price,
-    products.image,
-    orderdetails.order_id,
-	orderdetails.quantity
-	-- (products.unit_price*orderdetails.quantity) as  totalprice
-from products, orders
-INNER JOIN customers ON customers.cust_id=orders.cust_id
-INNER JoIN orderdetails ON  orderdetails.order_id=orders.order_id
-where customers.cust_id=1 ;
-    
-    SELECT * FROM orderdetails;
+
 SELECT SUM (products.unit_price*orderdetails.quantity) as totalamount  from products
 INNER JOIN orderdetails ON
     products.product_id =  orderdetails.product_id 
@@ -413,7 +409,6 @@ INNER JOIN orderdetails ON
 
 SELECT * FROM orders WHERE cust_id=1;
 
---  SELECT DISTINCT orderdetails.order_id from orderdetails,orders WHERE orderdetails.order_id=orders.order_id AND  orders.cust_id=1   ;
 
 
 SELECT
@@ -431,12 +426,7 @@ FROM products,customers, orders INNER JOIN orderdetails on orderdetails.order_id
 WHERE  products.product_id=orderdetails.product_id AND customers.cust_id=orders.cust_id 
 AND customers.cust_id=1 order by orders.order_id ;
 
-SELECT * FROM orders;
 
-insert into orders(cust_id) VALUES(1);
 
-insert into orderdetails(order_id,product_id,quantity) VALUES (7,2,2000);
-insert into orderdetails(order_id,product_id,quantity) VALUES (8,3,3000);
-insert into orderdetails(order_id,product_id,quantity) VALUES (9,5,5000);
 
 
