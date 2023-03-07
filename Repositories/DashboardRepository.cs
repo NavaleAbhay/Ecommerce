@@ -51,26 +51,39 @@ public class DashboardRepository : IDashboardRepository
     //     return productList;
     // }
 
-public List<RevenueModel> GetProductsData(){
-    List<RevenueModel> revenues=new List<RevenueModel>();
-    MySqlConnection connection=new MySqlConnection(conString);
-    try{
-
-        
-
+    public List<RevenueModel> GetProductsData()
+    {
+        List<RevenueModel> revenues = new List<RevenueModel>();
+        MySqlConnection connection = new MySqlConnection(conString);
+        try
+        {
+            string query = "SELECT orderdetails.product_id,products.title, SUM(orderdetails.quantity) * products.unit_price AS totalrevenue FROM orderdetails, products WHERE orderdetails.product_id = products.product_id GROUP BY product_id";
+            connection.Open();
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = int.Parse(reader["product_id"].ToString());
+                string title = reader["title"].ToString();
+                double totalrevenue = double.Parse(reader["totalrevenue"].ToString());
+                RevenueModel revenue = new RevenueModel
+                {
+                    ProductId = id,
+                    Title = title,
+                    TotalRevenue = totalrevenue
+                };
+                revenues.Add(revenue);
+            }
+            reader.Close();
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return revenues;
     }
-    catch(Exception e){
-        throw e;
-    }
-    finally{
-        connection.Close();
-    }
-
-
-    return revenues;
-}
-
-
-
-
 }
